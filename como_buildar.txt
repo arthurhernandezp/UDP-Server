@@ -1,0 +1,6 @@
+Precisa estar no diretorio raiz do projeto sem entrar em build ou outro diretorio
+
+rm -r build
+mkdir build
+cmake -S . -B build
+cmake --build build -j
