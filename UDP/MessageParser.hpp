@@ -7,25 +7,30 @@
 class Mensagem
 {
 public:
-    std::string tipo;
-    nlohmann::json valor;
+    Mensagem(std::string tipo, nlohmann::json valor);
 
-    Mensagem(const std::string& json_str);
-
-    Mensagem() = default;
-
-    std::string toJson() const;
-
-    void imprimir() const;
-};
-
-class ProcessadorMensagem 
-{
-public:
-    void processar(Mensagem& msg);
+    const std::string& tipo() const noexcept;
+    const nlohmann::json& valor() const noexcept;
 
 private:
-    void soma(Mensagem& msg);
-    void inverterCaixa(Mensagem& msg);
-    void inverterString(Mensagem& msg);
+    std::string _tipo;
+    nlohmann::json _valor;
+};
+
+class MessageCodec
+{
+public:
+    static Mensagem decode(const std::string& json_str);
+    static std::string encode(const Mensagem& mensagem);
+};
+
+class ProcessadorMensagem
+{
+public:
+    Mensagem processar(const Mensagem& msg) const;
+
+private:
+    nlohmann::json soma(const nlohmann::json& valor) const;
+    nlohmann::json inverterCaixa(const nlohmann::json& valor) const;
+    nlohmann::json inverterString(const nlohmann::json& valor) const;
 };

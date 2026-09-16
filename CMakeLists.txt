@@ -16,6 +16,7 @@ set(SOURCES
 	${SRC_DIR}/main.cpp
 	${SRC_DIR}/UDP/Server.cpp
 	${SRC_DIR}/UDP/MessageParser.cpp
+	${SRC_DIR}/UDP/UdpSocket.cpp
 )
 
 add_subdirectory(external)
