@@ -24,7 +24,7 @@ public:
     static std::string encode(const Mensagem& mensagem);
 };
 
-class ProcessadorMensagem
+class RequestProcessor
 {
 public:
     Mensagem processar(const Mensagem& msg) const;

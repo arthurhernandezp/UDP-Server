@@ -18,5 +18,5 @@ public:
 private:
     UdpSocket _socket;
 
-    ProcessadorMensagem _processador;
+    RequestProcessor _processador;
 };

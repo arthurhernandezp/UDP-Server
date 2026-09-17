@@ -59,7 +59,7 @@ std::string MessageCodec::encode(const Mensagem& mensagem)
     return nlohmann::json{{"tipo", mensagem.tipo()}, {"val", mensagem.valor()}}.dump();
 }
 
-Mensagem ProcessadorMensagem::processar(const Mensagem& msg) const
+Mensagem RequestProcessor::processar(const Mensagem& msg) const
 {
     if (msg.tipo() == "int")
         return Mensagem(msg.tipo(), soma(msg.valor()));
@@ -73,12 +73,12 @@ Mensagem ProcessadorMensagem::processar(const Mensagem& msg) const
     throw std::runtime_error("Tipo desconhecido: " + msg.tipo());
 }
 
-nlohmann::json ProcessadorMensagem::soma(const nlohmann::json& valor) const
+nlohmann::json RequestProcessor::soma(const nlohmann::json& valor) const
 {
     return valor.get<long long>() + 1;
 }
 
-nlohmann::json ProcessadorMensagem::inverterCaixa(const nlohmann::json& valor) const
+nlohmann::json RequestProcessor::inverterCaixa(const nlohmann::json& valor) const
 {
     std::string s = valor.get<std::string>();
 
@@ -96,7 +96,7 @@ nlohmann::json ProcessadorMensagem::inverterCaixa(const nlohmann::json& valor) c
     return std::string(1, c);
 }
 
-nlohmann::json ProcessadorMensagem::inverterString(const nlohmann::json& valor) const
+nlohmann::json RequestProcessor::inverterString(const nlohmann::json& valor) const
 {
     std::string s = valor.get<std::string>();
 
