@@ -70,7 +70,7 @@ void UdpSocket::send(const std::string& mensagem, const sockaddr_in& cliente,
     }
 }
 
-std::uint16_t UdpSocket::port() const noexcept
+std::uint16_t UdpSocket::port() const
 {
     return _port;
 }
