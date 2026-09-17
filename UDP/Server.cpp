@@ -21,12 +21,12 @@ void ServidorUdp::processarDatagrama()
 {
     char buffer[2048];
 
-    sockaddr_in cli_addr{};
-    socklen_t calen = sizeof(cli_addr);
+    sockaddr_in cli_addr;
+    socklen_t cli_addr_size = sizeof(cli_addr);
 
     std::cout << "Aguardando datagrama JSON...\n";
 
-    ssize_t bytes = _socket.receive(buffer, sizeof(buffer) - 1, cli_addr, calen);
+    ssize_t bytes = _socket.receive(buffer, sizeof(buffer) - 1, cli_addr, cli_addr_size);
 
     buffer[bytes] = '\0';
     std::string json_recebido(buffer);
@@ -42,7 +42,7 @@ void ServidorUdp::processarDatagrama()
     
     std::cout << "Resposta JSON: " << resposta << "\n";
 
-    _socket.send(resposta, cli_addr, calen);
+    _socket.send(resposta, cli_addr, cli_addr_size);
 
     std::cout << "Resposta enviada com sucesso.\n";
 }
