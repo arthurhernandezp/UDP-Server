@@ -7,16 +7,17 @@
 
 ServidorUdp::ServidorUdp(int porta) : _socket()
 {
-    if (porta < 1 || porta > std::numeric_limits<std::uint16_t>::max()) {
+    if (porta < 1 || porta > std::numeric_limits<std::uint16_t>::max()) 
+    {
         throw std::invalid_argument("a porta deve estar entre 1 e 65535");
     }
 
     _socket.bindSocket(static_cast<std::uint16_t>(porta));
     
-    _mostrarInfo();
+    std::cout << "Servidor iniciado na porta " << _socket.port() << "\n\n";
 }
 
-void ServidorUdp::processarUmaMensagem()
+void ServidorUdp::processarDatagrama()
 {
     char buffer[2048];
 
@@ -55,7 +56,7 @@ void ServidorUdp::loop()
         try 
         {
             std::cout << std::endl;
-            processarUmaMensagem();
+            processarDatagrama();
             std::cout << std::endl;
         } 
         catch (const std::exception& e) 
@@ -63,9 +64,4 @@ void ServidorUdp::loop()
             std::cerr << "Erro: " << e.what() << "\n";
         }
     }
-}
-
-void ServidorUdp::_mostrarInfo()
-{
-    std::cout << "Servidor iniciado na porta " << _socket.port() << "\n\n";
 }

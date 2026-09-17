@@ -10,12 +10,15 @@ int main(int argc, char ** argv)
         std::cout << "Uso: " << argv[0] << " <porta>" << std::endl;
         return 1;
     }
-    try {
+    
+    try 
+    {
         int porta = std::stoi(argv[1]);
         ServidorUdp servidor(porta);
         servidor.loop();
 
-    } catch (const std::exception& e) {
+    } catch (const std::exception& e) 
+    {
         std::cerr << "Erro: " << e.what() << '\n';
         return 1;
     }

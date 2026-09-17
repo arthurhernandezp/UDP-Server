@@ -46,10 +46,10 @@ Mensagem MessageCodec::decode(const std::string& json_str)
     if (!json.contains("tipo") || !json.at("tipo").is_string())
         throw std::runtime_error("A mensagem deve conter o campo string 'tipo'");
 
-    if (!json.contains("valor") && !json.contains("val"))
-        throw std::runtime_error("A mensagem deve conter o campo 'valor'");
+    if (!json.contains("val"))
+        throw std::runtime_error("A mensagem deve conter o campo 'val'");
 
-    const auto& valor = json.contains("valor") ? json.at("valor") : json.at("val");
+    const auto& valor = json.at("val");
 
     return Mensagem(json.at("tipo").get<std::string>(), valor);
 }

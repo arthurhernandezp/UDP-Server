@@ -30,7 +30,7 @@ void UdpSocket::bindSocket(std::uint16_t porta)
 
     socklen_t tamanho = sizeof(endereco);
 
-    if (getsockname(_fd, reinterpret_cast<sockaddr*>(&endereco), &tamanho) < 0) 
+    if (getsockname(_fd, (struct sockaddr*)(&endereco), &tamanho) < 0) 
     {
         throw std::runtime_error("Erro no getsockname");
     }
