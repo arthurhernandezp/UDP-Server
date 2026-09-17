@@ -1,10 +1,18 @@
 #include "Server.hpp"
 
+#include <cstdint>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 
-ServidorUdp::ServidorUdp(int porta) : _socket(porta)
+ServidorUdp::ServidorUdp(int porta) : _socket()
 {
+    if (porta < 1 || porta > std::numeric_limits<std::uint16_t>::max()) {
+        throw std::invalid_argument("a porta deve estar entre 1 e 65535");
+    }
+
+    _socket.bindSocket(static_cast<std::uint16_t>(porta));
+    
     _mostrarInfo();
 }
 

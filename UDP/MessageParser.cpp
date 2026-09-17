@@ -7,14 +7,17 @@
 Mensagem::Mensagem(std::string tipo, nlohmann::json valor)
     : _tipo(std::move(tipo)), _valor(std::move(valor))
 {
+    
     if (_tipo == "int" && !_valor.is_number_integer())
     {
         throw std::runtime_error("O campo 'valor' deve ser inteiro para tipo 'int'");
     }
+
     if (_tipo == "char" && (!_valor.is_string() || _valor.get<std::string>().size() != 1))
     {
         throw std::runtime_error("O campo 'valor' deve conter um único caractere");
     }
+
     if (_tipo == "string" && !_valor.is_string())
     {
         throw std::runtime_error("O campo 'valor' deve ser string para tipo 'string'");
@@ -34,6 +37,7 @@ const nlohmann::json& Mensagem::valor() const noexcept
 Mensagem MessageCodec::decode(const std::string& json_str)
 {
     const nlohmann::json json = nlohmann::json::parse(json_str);
+
     if (!json.is_object())
     {
         throw std::runtime_error("A mensagem JSON deve ser um objeto");
@@ -46,6 +50,7 @@ Mensagem MessageCodec::decode(const std::string& json_str)
         throw std::runtime_error("A mensagem deve conter o campo 'valor'");
 
     const auto& valor = json.contains("valor") ? json.at("valor") : json.at("val");
+
     return Mensagem(json.at("tipo").get<std::string>(), valor);
 }
 
@@ -58,15 +63,17 @@ Mensagem ProcessadorMensagem::processar(const Mensagem& msg) const
 {
     if (msg.tipo() == "int")
         return Mensagem(msg.tipo(), soma(msg.valor()));
+
     if (msg.tipo() == "char")
         return Mensagem(msg.tipo(), inverterCaixa(msg.valor()));
+
     if (msg.tipo() == "string")
         return Mensagem(msg.tipo(), inverterString(msg.valor()));
 
     throw std::runtime_error("Tipo desconhecido: " + msg.tipo());
 }
 
- nlohmann::json ProcessadorMensagem::soma(const nlohmann::json& valor) const
+nlohmann::json ProcessadorMensagem::soma(const nlohmann::json& valor) const
 {
     return valor.get<long long>() + 1;
 }
